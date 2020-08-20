@@ -10,7 +10,12 @@ import SwiftUI
 struct EmojiArtDocumentView: View {
     @ObservedObject var document: EmojiArtDocument
     
-    @State var chosenPalette: String = ""
+    @State var chosenPalette: String
+    
+    init(document: EmojiArtDocument) {
+        self.document = document
+        _chosenPalette = State(wrappedValue: document.defaultPalette)
+    }
     
     var body: some View {
         VStack {
@@ -24,7 +29,7 @@ struct EmojiArtDocumentView: View {
                                 .onDrag { NSItemProvider(object: emoji as NSString) }
                         }
                     }
-                }.onAppear { chosenPalette = document.defaultPalette }
+                }
             }
             GeometryReader { geometry in
                 ZStack {
